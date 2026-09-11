@@ -1,3 +1,18 @@
+### Project files ###
+
+# Documentation and shared workspace configuration are versioned.
+
+docs/LEARNING_STATE.md
+.github/agents/tdnr-architecture-mentor.agent.md
+
+### Build output and local tooling ###
+
+.gradle/
+build/
+out/
+
+### JAVA ### 
+
 # Compiled class file
 *.class
 
@@ -12,6 +27,7 @@
 
 # Package Files #
 *.jar
+!apps/backend/gradle/wrapper/gradle-wrapper.jar
 *.war
 *.nar
 *.ear
