@@ -6,6 +6,8 @@
 ## Current v1 direction
 - The server is the authoritative API and database boundary.
 - The first backend prototype uses Java 21 without Spring Boot.
+- The backend uses Gradle 8.10.2 and plain JUnit 5 tests for domain behavior;
+   Spring's test context is not required for ordinary Java classes.
 - Clients communicate through the versioned REST/JSON API.
 - Android and desktop clients are offline-first, with local storage and queued
    synchronization.
@@ -17,6 +19,14 @@
    deferred until a concrete requirement exists.
 
 Detailed decisions are recorded in `docs/decisions/`.
+
+## Current implementation progress
+- The `Task` domain validates required values, trims titles, tracks versions,
+   and supports status, title, due-time, completion, and reopening mutations.
+- `TaskRepository` defines save, lookup by UUID, and list operations.
+- `InMemoryTaskRepository` currently uses an `ArrayList` as a learning
+   implementation. Existing UUID replacement behavior still needs a test and
+   explicit implementation decision before moving to PostgreSQL.
 
 ## Language consideration for the back-end
 - Initial thought: Java. Don't know if Spring Boot is the right tool for the

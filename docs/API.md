@@ -2,6 +2,10 @@
 
 This document defines the smallest shared contract for the web client, Java backend prototype, and future Flutter client.
 
+The current domain prototype is single-user. Ownership and authentication are
+deferred until a later version, so the task model and first API slice should not
+depend on an `owner_id` being supplied by clients.
+
 ## Conventions
 
 - Base path: `/api/v1`
@@ -20,12 +24,9 @@ This document defines the smallest shared contract for the web client, Java back
   "title": "Read the architecture notes",
   "description": null,
   "status": "TODO",
-  "owner_id": "018f2d8e-3a7a-7b0a-9f32-8f5ad4c6b2d2",
   "collection_id": null,
   "created_at": "2026-09-13T12:30:00Z",
   "updated_at": "2026-09-13T12:30:00Z",
-  "created_by_device_id": "018f2d8e-3a7a-7b0a-9f32-8f5ad4c6b2d3",
-  "updated_by_device_id": "018f2d8e-3a7a-7b0a-9f32-8f5ad4c6b2d3",
   "version": 1,
   "deleted_at": null
 }
@@ -143,7 +144,7 @@ Initial error codes include `VALIDATION_FAILED`, `NOT_FOUND`, `VERSION_CONFLICT`
 
 ## Deliberately deferred
 
-- Authentication and authorization details.
+- Authentication, authorization, ownership, and device metadata details.
 - Pagination beyond the initial cursor shape.
 - Tags, collections, recurrence, reminders, and parent tasks in endpoint payloads.
 - Conflict-merge rules beyond surfacing the current server entity.

@@ -25,6 +25,10 @@ For v1, TDNR will use:
 
 The backend language and framework remain open. They will be chosen after the first domain model and API contract are sufficiently clear.
 
+The first domain implementation now uses Java 21 without Spring Boot. Plain
+JUnit 5 tests exercise the domain and in-memory repository directly; a Spring
+test context is not required for these units.
+
 ## Consequences
 
 - The first implementation can focus on domain behavior, API correctness, migrations, authentication, and tests.
@@ -50,4 +54,7 @@ Rejected because a change log is useful for synchronization and auditability wit
 
 ## Next decision
 
-Define the v1 domain model and API contract for the smallest useful task workflow: create, list, update, complete, and delete a task.
+Complete the repository contract and its in-memory behavior, especially
+replacement of an existing task by UUID. Then define the application service
+that coordinates task creation and repository persistence before introducing
+HTTP or PostgreSQL.
