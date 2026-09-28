@@ -1,6 +1,7 @@
 package tndr.backend.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -37,6 +38,14 @@ public class TaskRepositoryTest {
         assertEquals(task.getCreatedAt(), savedTask.getCreatedAt());
         assertEquals(task.getUpdatedAt(), savedTask.getUpdatedAt());
         assertEquals(task.getDueAt(), savedTask.getDueAt());
+
+        Task nullTask = null;
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> repository.save(nullTask),
+                "Task cannot be null"
+        );
+        assertEquals("Task cannot be null", exception.getMessage());
     }
 
     @Test
@@ -54,6 +63,13 @@ public class TaskRepositoryTest {
         assertEquals(task.getCreatedAt(), foundTask.getCreatedAt());
         assertEquals(task.getUpdatedAt(), foundTask.getUpdatedAt());
         assertEquals(task.getDueAt(), foundTask.getDueAt());
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> repository.findById(null),
+                "Task id cannot be null"
+        );
+        assertEquals("Task id cannot be null", exception.getMessage());
     }
 
     @Test
@@ -84,5 +100,30 @@ public class TaskRepositoryTest {
 
         assertEquals("Updated Task Title", updatedTask.getTitle());
         assertEquals(TaskStatus.DONE, updatedTask.getStatus());
+    }
+
+    @Test
+    public void testEmptyRepository() {
+        TaskRepository repository = new InMemoryTaskRepository();
+        assertEquals(0, repository.findAll().size());
+    }
+
+    @Test
+    public void testFindByIdNotFound() {
+        TaskRepository repository = new InMemoryTaskRepository();
+        assertEquals(false, repository.findById(UUID.randomUUID()).isPresent());
+    }
+
+    @Test
+    public void testSaveDuplicateTask() {
+        Task task = newTask();
+        TaskRepository repository = new InMemoryTaskRepository();
+
+        repository.save(task);
+        task.changeTitle("Updated Task Title");
+        repository.save(task); // Save the same task again
+        Task retrievdTask = repository.findById(task.getId()).orElse(null);
+        assertEquals("Updated Task Title", retrievdTask.getTitle());
+        assertEquals(1, repository.findAll().size());
     }
 }
