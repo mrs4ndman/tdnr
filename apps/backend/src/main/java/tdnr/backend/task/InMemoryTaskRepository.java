@@ -1,4 +1,4 @@
-package tndr.backend.task;
+package tdnr.backend.task;
 
 import java.util.ArrayList;
 import java.util.List;

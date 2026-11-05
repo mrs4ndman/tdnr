@@ -1,4 +1,4 @@
-package tndr.backend.task;
+package tdnr.backend.task;
 
 import java.time.Instant;
 import java.util.Objects;

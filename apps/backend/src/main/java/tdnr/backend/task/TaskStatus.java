@@ -1,4 +1,4 @@
-package tndr.backend.task;
+package tdnr.backend.task;
 
 public enum TaskStatus {
     TODO,
